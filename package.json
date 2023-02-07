@@ -1,0 +1,8 @@
+{
+  "name": "colorrs",
+  "version": "1.0.0",
+  "description": "colors shades generation tool",
+  "main": "app.js",
+  "author": "Sevenn",
+  "license": "MIT"
+}
