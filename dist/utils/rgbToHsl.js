@@ -4,14 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const isRgb_1 = __importDefault(require("./validations/isRgb"));
-// TODO => a function to convert rgb color format to hsl
-//  params => a string containing rgb fornat and returns a value in hsl format
+//  params => a string containing rgb format and returns a value in hsl format
 function rgbToHsl(rgb) {
     let parsed_color = (0, isRgb_1.default)(rgb, true);
-    if (parsed_color instanceof Array && parsed_color.length > 1) {
-        let r = parseFloat(parsed_color[0]) / 255;
-        let g = parseFloat(parsed_color[1]) / 255;
-        let b = parseFloat(parsed_color[2]) / 255;
+    if (parsed_color instanceof Array) {
+        // convert to fraction between 0-1
+        let r = parseInt(parsed_color[0]) / 255;
+        let g = parseInt(parsed_color[1]) / 255;
+        let b = parseInt(parsed_color[2]) / 255;
         // calculating min and max channels out of of rgb
         let cmin = Math.min(r, g, b);
         let cmax = Math.max(r, g, b);
@@ -41,8 +41,20 @@ function rgbToHsl(rgb) {
         if (h < 0) {
             h += 360;
         }
-        console.log(h);
-        // calculation of lightness
+        // calculate lightness
+        l = (cmax + cmin) / 2;
+        // calculate saturation
+        if (delta == 0) {
+            s = 0;
+        }
+        else {
+            s = delta / (1 - Math.abs(2 * l - 1));
+        }
+        // lightness is given as % so need to mulitply by 100
+        l = parseInt((l * 100).toFixed(0));
+        s = parseInt((s * 100).toFixed(0));
+        let hsl = `hsl(${h},${s}%,${l}%)`;
+        return hsl;
     }
     else {
         throw new Error("Given string is not a valid RGB");

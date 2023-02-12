@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function isRgb(rgb, return_array = false) {
+function isRgb(rgb, return_color = false) {
     //  rgb(255,255,255), rgb(0,0,0);
     // check for rgb at start of string
     const rgb_present = rgb.substring(0, 3).toLowerCase() === "rgb";
@@ -21,7 +21,7 @@ function isRgb(rgb, return_array = false) {
             flag = false;
     }
     if (flag && rgb_present) {
-        if (return_array) {
+        if (return_color) {
             return rbg_array;
         }
         else

@@ -1,6 +1,6 @@
 export default function isRgb(
 	rgb: string,
-	return_array: boolean = false
+	return_color: boolean = false
 ): boolean | Array<string> {
 	//  rgb(255,255,255), rgb(0,0,0);
 
@@ -21,7 +21,7 @@ export default function isRgb(
 		} else flag = false;
 	}
 	if (flag && rgb_present) {
-		if (return_array) {
+		if (return_color) {
 			return rbg_array;
 		} else return true;
 	}
