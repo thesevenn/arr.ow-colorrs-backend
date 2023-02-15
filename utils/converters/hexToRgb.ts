@@ -1,4 +1,4 @@
-import isHex from "./validations/isHex";
+import isHex from "../validations/isHex";
 
 //  params => a string containing hex foramt color and returns a value in rgb format
 

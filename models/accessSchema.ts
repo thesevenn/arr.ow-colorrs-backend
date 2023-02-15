@@ -1,12 +1,24 @@
-import {Schema} from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
-const accessSchema = new Schema({
+const accessSchema: Schema = new Schema({
 	client_id: {
 		type: String,
-		require: true,
+		required: true,
 	},
 	api_key: {
 		type: String,
-		require: true,
+		required: true,
+	},
+	createdAt: {
+		type: Date,
+		default: Date.now(),
+		required: true,
+	},
+	isValid: {
+		type: Boolean,
+		required: true,
 	},
 });
+
+const accessModel = mongoose.model("Access", accessSchema);
+export default accessModel;

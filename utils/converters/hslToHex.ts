@@ -1,6 +1,6 @@
 import hslToRgb from "./hslToRgb";
 import rgbToHex from "./rgbToHex";
-import isHsl from "./validations/isHsl";
+import isHsl from "../validations/isHsl";
 
 //  params => a string containing hsl format and returns a vlaue in hex format
 

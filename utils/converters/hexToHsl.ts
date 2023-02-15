@@ -1,4 +1,4 @@
-import isHex from "./validations/isHex";
+import isHex from "../validations/isHex";
 import hexToRgb from "./hexToRgb";
 import rgbToHsl from "./rgbToHsl";
 

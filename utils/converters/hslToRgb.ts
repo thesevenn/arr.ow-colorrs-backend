@@ -1,4 +1,4 @@
-import isHsl from "./validations/isHsl";
+import isHsl from "../validations/isHsl";
 
 // params =>  string containing hsl format and returns a value in rgb format
 export default function hslToRgb(hsl: string): string {

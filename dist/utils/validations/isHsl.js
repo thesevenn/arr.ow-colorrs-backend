@@ -2,7 +2,6 @@
 // TODO => a function which takes a hsl color format and return true or false
 Object.defineProperty(exports, "__esModule", { value: true });
 function isHsl(hsl, return_color = false) {
-    // hsl(0,0,0) to hsl(360,100,100) or hsl(0 0 0) to hsl(360 100 100);
     const hsl_present = hsl.substring(0, 3).toLowerCase() === "hsl";
     let seperator = hsl.charAt(hsl.indexOf(",") || hsl.indexOf(" "));
     const hsl_array = hsl

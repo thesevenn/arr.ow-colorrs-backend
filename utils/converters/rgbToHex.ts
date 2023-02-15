@@ -1,4 +1,4 @@
-import isRgb from "./validations/isRgb";
+import isRgb from "../validations/isRgb";
 
 //  params => string containing rgb format color and returns a value in hex format
 

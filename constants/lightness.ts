@@ -1,0 +1,10 @@
+export const l_100: Array<number> = [10, 11, 12]; // 10,11,12
+export const l_200: Array<number> = [19, 20, 21]; // 19,20,21
+export const l_300: Array<number> = [28, 29, 30]; // 28,29,30
+export const l_400: Array<number> = [43, 44, 45]; // 43,44,45
+export const l_500: Array<number> = [51, 52, 53]; // 51,52,53,54
+export const l_600: Array<number> = [63, 64, 65]; // 63,64,65
+export const l_700: Array<number> = [71, 72]; // 71,72
+export const l_800: Array<number> = [75, 76, 77]; // 75,76,77
+export const l_900: Array<number> = [91, 92]; // 91,92
+export const l_950: Array<number> = [96, 97, 98]; // 96,97,99
