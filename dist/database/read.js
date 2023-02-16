@@ -23,13 +23,27 @@ const readByFilter = (options) => __awaiter(void 0, void 0, void 0, function* ()
     const items = options.batches || 15;
     const skip = (options.page - 1) * items;
     const filter = options.hue ? { hue: options.hue } : {};
-    if ((yield batchSchema_2.default.countDocuments().exec()) > skip * items) {
-        console.log("hello");
+    const left = (yield batchSchema_2.default.countDocuments()) - options.page * items;
+    if (left <= 0 && options.page > 1) {
+        return {
+            batches: [],
+            batches_left: 0,
+        };
     }
     try {
         const response = yield batchSchema_2.default.find(filter).limit(items).skip(skip);
-        if (response)
-            return response;
+        if (response) {
+            return {
+                batches: response,
+                batches_left: left > 0 ? left : 0,
+            };
+        }
+        else {
+            return {
+                batches: [],
+                batches_left: left > 0 ? left : 0,
+            };
+        }
     }
     catch (error) {
         if (error instanceof Error) {

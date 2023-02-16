@@ -13,15 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generator = void 0;
-const constants_1 = require("../constants");
 const isHsl_1 = __importDefault(require("../utils/validations/isHsl"));
-const randomNumber_1 = __importDefault(require("../utils/randomNumber"));
-const generateShades_1 = __importDefault(require("../utils/generateShades"));
 const hexToHsl_1 = __importDefault(require("../utils/converters/hexToHsl"));
-const hslToHex_1 = __importDefault(require("../utils/converters/hslToHex"));
-const hslToRgb_1 = __importDefault(require("../utils/converters/hslToRgb"));
 const create_1 = require("../database/create");
 const read_1 = require("../database/read");
+const generateBatche_1 = __importDefault(require("../utils/generateBatche"));
 const generator = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { color } = req.body;
     if (color) {
@@ -41,103 +37,7 @@ const generator = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     console.log("worked");
                 }
                 else {
-                    //  selecting random lightness from different ranges
-                    // lightness array => l
-                    let l = [];
-                    for (let i in constants_1.lightness) {
-                        // putting the lightness given in base color to shades
-                        if (constants_1.lightness[i][0] >= li && Math.abs(constants_1.lightness[i][0] - li) <= 9) {
-                            l.push(li);
-                            continue;
-                        }
-                        let index = (0, randomNumber_1.default)(constants_1.lightness[i].length);
-                        l.push(constants_1.lightness[i][index]);
-                        // console.log(lightness[i][index]);
-                    }
-                    // handling edge conditions of lightness
-                    if (li == 100) {
-                        l[l.length - 1] = 100;
-                    }
-                    else if (li == 0) {
-                        l[0] = 0;
-                    }
-                    // shade for nutral color b/w 0-5
-                    let random_s = Math.floor(Math.random() * 5);
-                    //  generating shades for primary color =>
-                    let primary_hsl = (0, generateShades_1.default)(h, s, l);
-                    // generating shades for neutral color =>
-                    let neutral_hsl = (0, generateShades_1.default)(h, random_s, l);
-                    // primary accenet color generation =>
-                    let accent_hsl = [];
-                    accent_hsl = (0, generateShades_1.default)(h - 180, s, l);
-                    // secondary accenet colors generation =>
-                    let red_hsl = [], green_hsl = [], yellow_hsl = [];
-                    if (h) {
-                        red_hsl = (0, generateShades_1.default)(360, s, l);
-                    }
-                    if (h) {
-                        green_hsl = (0, generateShades_1.default)(140, s, l);
-                    }
-                    if (h) {
-                        yellow_hsl = (0, generateShades_1.default)(55, s, l);
-                    }
-                    // hex arrays
-                    let primary_hex = [], neutral_hex = [], accent_hex = [], red_hex = [], green_hex = [], yellow_hex = [];
-                    // rgb arrays
-                    let primary_rgb = [], neutral_rgb = [], accent_rgb = [], red_rgb = [], green_rgb = [], yellow_rgb = [];
-                    for (let i in primary_hsl) {
-                        primary_hex.push((0, hslToHex_1.default)(primary_hsl[i]));
-                        neutral_hex.push((0, hslToHex_1.default)(neutral_hsl[i]));
-                        // if (accent_hsl) accent_hex.push(hslToHex(accent_hsl[i]));
-                        if (red_hsl)
-                            red_hex.push((0, hslToHex_1.default)(red_hsl[i]));
-                        if (green_hsl)
-                            green_hex.push((0, hslToHex_1.default)(green_hsl[i]));
-                        if (yellow_hsl)
-                            yellow_hex.push((0, hslToHex_1.default)(yellow_hsl[i]));
-                        primary_rgb.push((0, hslToRgb_1.default)(primary_hsl[i]));
-                        neutral_rgb.push((0, hslToRgb_1.default)(neutral_hsl[i]));
-                        // if (accent_hsl) accent_rgb.push(hslToRgb(accent_hsl[i]));
-                        if (red_hsl)
-                            red_rgb.push((0, hslToRgb_1.default)(red_hsl[i]));
-                        if (green_hsl)
-                            green_rgb.push((0, hslToRgb_1.default)(green_hsl[i]));
-                        if (yellow_hsl)
-                            yellow_rgb.push((0, hslToRgb_1.default)(yellow_hsl[i]));
-                    }
-                    batch = {
-                        createdAt: Date.now(),
-                        id: "" + h + s + li,
-                        hue: h,
-                        saturation: s,
-                        lightness: li,
-                        colors: {
-                            hsl: {
-                                primary: primary_hsl,
-                                neutral: neutral_hsl,
-                                accent: accent_hsl,
-                                red: red_hsl,
-                                green: green_hsl,
-                                yellow: yellow_hsl,
-                            },
-                            hex: {
-                                primary: primary_hex,
-                                neutral: neutral_hex,
-                                accent: accent_hex,
-                                red: red_hex,
-                                green: green_hex,
-                                yellow: yellow_hex,
-                            },
-                            rgb: {
-                                primary: primary_rgb,
-                                neutral: neutral_rgb,
-                                accent: accent_rgb,
-                                red: red_rgb,
-                                green: green_rgb,
-                                yellow: yellow_rgb,
-                            },
-                        },
-                    };
+                    batch = (0, generateBatche_1.default)({ h, s, li });
                     (0, create_1.createBatch)(batch);
                 }
                 res.status(200).json(batch);
@@ -260,3 +160,112 @@ first lightness is taken from the color provided in request param
                 }
 
 */
+/* //  selecting random lightness from different ranges
+                    // lightness array => l
+                    let l: Array<number> = [];
+                    for (let i in lightness) {
+                        // putting the lightness given in base color to shades
+                        if (lightness[i][0] >= li && Math.abs(lightness[i][0] - li) <= 9) {
+                            l.push(li);
+                            continue;
+                        }
+                        let index = randomNumber(lightness[i].length);
+                        l.push(lightness[i][index]);
+                        // console.log(lightness[i][index]);
+                    }
+                    // handling edge conditions of lightness
+                    if (li == 100) {
+                        l[l.length - 1] = 100;
+                    } else if (li == 0) {
+                        l[0] = 0;
+                    }
+                    // shade for nutral color b/w 0-5
+                    let random_s = Math.floor(Math.random() * 5);
+
+                    //  generating shades for primary color =>
+                    let primary_hsl: Array<string> = generateShades(h, s, l);
+
+                    // generating shades for neutral color =>
+                    let neutral_hsl: Array<string> = generateShades(h, random_s, l);
+
+                    // primary accenet color generation =>
+                    let accent_hsl: Array<string> = [];
+                    accent_hsl = generateShades(h - 180, s, l);
+                    // secondary accenet colors generation =>
+                    let red_hsl: Array<string> = [],
+                        green_hsl: Array<string> = [],
+                        yellow_hsl: Array<string> = [];
+                    if (h) {
+                        red_hsl = generateShades(360, s, l);
+                    }
+                    if (h) {
+                        green_hsl = generateShades(140, s, l);
+                    }
+                    if (h) {
+                        yellow_hsl = generateShades(55, s, l);
+                    }
+                    // hex arrays
+                    let primary_hex: Array<string> = [],
+                        neutral_hex: Array<string> = [],
+                        accent_hex: Array<string> = [],
+                        red_hex: Array<string> = [],
+                        green_hex: Array<string> = [],
+                        yellow_hex: Array<string> = [];
+
+                    // rgb arrays
+                    let primary_rgb: Array<string> = [],
+                        neutral_rgb: Array<string> = [],
+                        accent_rgb: Array<string> = [],
+                        red_rgb: Array<string> = [],
+                        green_rgb: Array<string> = [],
+                        yellow_rgb: Array<string> = [];
+
+                    for (let i in primary_hsl) {
+                        primary_hex.push(hslToHex(primary_hsl[i]));
+                        neutral_hex.push(hslToHex(neutral_hsl[i]));
+                        // if (accent_hsl) accent_hex.push(hslToHex(accent_hsl[i]));
+                        if (red_hsl) red_hex.push(hslToHex(red_hsl[i]));
+                        if (green_hsl) green_hex.push(hslToHex(green_hsl[i]));
+                        if (yellow_hsl) yellow_hex.push(hslToHex(yellow_hsl[i]));
+
+                        primary_rgb.push(hslToRgb(primary_hsl[i]));
+                        neutral_rgb.push(hslToRgb(neutral_hsl[i]));
+                        // if (accent_hsl) accent_rgb.push(hslToRgb(accent_hsl[i]));
+                        if (red_hsl) red_rgb.push(hslToRgb(red_hsl[i]));
+                        if (green_hsl) green_rgb.push(hslToRgb(green_hsl[i]));
+                        if (yellow_hsl) yellow_rgb.push(hslToRgb(yellow_hsl[i]));
+                    }
+
+                    batch = {
+                        createdAt: Date.now(),
+                        id: "" + h + s + li,
+                        hue: h,
+                        saturation: s,
+                        lightness: li,
+                        colors: {
+                            hsl: {
+                                primary: primary_hsl,
+                                neutral: neutral_hsl,
+                                accent: accent_hsl,
+                                red: red_hsl,
+                                green: green_hsl,
+                                yellow: yellow_hsl,
+                            },
+                            hex: {
+                                primary: primary_hex,
+                                neutral: neutral_hex,
+                                accent: accent_hex,
+                                red: red_hex,
+                                green: green_hex,
+                                yellow: yellow_hex,
+                            },
+                            rgb: {
+                                primary: primary_rgb,
+                                neutral: neutral_rgb,
+                                accent: accent_rgb,
+                                red: red_rgb,
+                                green: green_rgb,
+                                yellow: yellow_rgb,
+                            },
+                        },
+                    }; */
