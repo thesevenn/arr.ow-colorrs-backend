@@ -1,5 +1,4 @@
 import {Response, Request} from "express";
-import {Batch} from "../constants/types/batch";
 import {readByFilter} from "../database/read";
 import {options} from "../database/read";
 

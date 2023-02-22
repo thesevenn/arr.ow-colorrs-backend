@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.readByFilter = exports.readById = void 0;
 const batchSchema_1 = __importDefault(require("../models/batchSchema"));
-const batchSchema_2 = __importDefault(require("../models/batchSchema"));
+const previewSchema_1 = __importDefault(require("../models/previewSchema"));
 const readById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return yield batchSchema_1.default.findOne({ id: id });
 });
@@ -23,7 +23,7 @@ const readByFilter = (options) => __awaiter(void 0, void 0, void 0, function* ()
     const items = options.batches || 15;
     const skip = (options.page - 1) * items;
     const filter = options.hue ? { hue: options.hue } : {};
-    const left = (yield batchSchema_2.default.countDocuments()) - options.page * items;
+    const left = (yield previewSchema_1.default.countDocuments()) - options.page * items;
     if (left <= 0 && options.page > 1) {
         return {
             batches: [],
@@ -31,7 +31,7 @@ const readByFilter = (options) => __awaiter(void 0, void 0, void 0, function* ()
         };
     }
     try {
-        const response = yield batchSchema_2.default.find(filter).limit(items).skip(skip);
+        const response = yield previewSchema_1.default.find(filter).limit(items).skip(skip);
         if (response) {
             return {
                 batches: response,
@@ -52,7 +52,3 @@ const readByFilter = (options) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.readByFilter = readByFilter;
-/*
-
-1 page => 15*page 15,15=>,30
-*/

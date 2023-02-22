@@ -20,6 +20,7 @@ const read_1 = require("../database/read");
 const generateBatche_1 = __importDefault(require("../utils/generateBatche"));
 const generator = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { color } = req.body;
+    console.log(color);
     if (color) {
         try {
             let hsl_color = (0, hexToHsl_1.default)(color);
@@ -38,6 +39,15 @@ const generator = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 }
                 else {
                     batch = (0, generateBatche_1.default)({ h, s, li });
+                    const preview = {
+                        batch_id: "" + h + s + li,
+                        hue: h,
+                        saturation: s,
+                        lightness: li,
+                        preview: batch.colors.hsl.primary,
+                        base: color,
+                    };
+                    (0, create_1.createPreview)(preview);
                     (0, create_1.createBatch)(batch);
                 }
                 res.status(200).json(batch);
@@ -45,7 +55,7 @@ const generator = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         catch (error) {
             if (error instanceof Error) {
-                console.log(error.message);
+                console.log(error);
                 res.status(500).json({});
             }
         }

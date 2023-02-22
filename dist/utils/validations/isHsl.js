@@ -2,6 +2,7 @@
 // TODO => a function which takes a hsl color format and return true or false
 Object.defineProperty(exports, "__esModule", { value: true });
 function isHsl(hsl, return_color = false) {
+    console.log(hsl, "aat hsl");
     const hsl_present = hsl.substring(0, 3).toLowerCase() === "hsl";
     let seperator = hsl.charAt(hsl.indexOf(",") || hsl.indexOf(" "));
     const hsl_array = hsl

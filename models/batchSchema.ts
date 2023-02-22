@@ -7,6 +7,10 @@ const batchSchema: Schema = new Schema(
 			unique: true,
 			required: true,
 		},
+		createdAt: {
+			type: Number,
+			default: Date.now(),
+		},
 		hue: {
 			type: Number,
 			required: true,

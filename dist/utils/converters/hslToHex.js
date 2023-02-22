@@ -14,7 +14,7 @@ function hslToHex(hsl) {
         return hex;
     }
     else {
-        throw new Error("a string containing hex format and returns a vlaue in hsl format");
+        throw new Error("Not a valid HSL value");
     }
 }
 exports.default = hslToHex;

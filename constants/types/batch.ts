@@ -1,5 +1,3 @@
-import {Document} from "mongoose";
-
 export interface Batch {
 	id: string;
 	createdAt: number;

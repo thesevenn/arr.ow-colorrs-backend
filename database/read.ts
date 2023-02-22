@@ -1,11 +1,8 @@
-import colorModel from "../models/batchSchema";
 import batchModel from "../models/batchSchema";
-import {Batch} from "../constants/types/batch";
-
-import {Document} from "mongoose";
+import previewModel from "../models/previewSchema";
 
 export const readById: Function = async (id: string) => {
-	return await colorModel.findOne({id: id});
+	return await batchModel.findOne({id: id});
 };
 
 export interface options {
@@ -19,7 +16,7 @@ export const readByFilter = async (options: options) => {
 	const skip: number = (options.page - 1) * items;
 	const filter: Object = options.hue ? {hue: options.hue} : {};
 	const left: number =
-		(await batchModel.countDocuments()) - options.page * items;
+		(await previewModel.countDocuments()) - options.page * items;
 	if (left <= 0 && options.page > 1) {
 		return {
 			batches: [],
@@ -27,7 +24,7 @@ export const readByFilter = async (options: options) => {
 		};
 	}
 	try {
-		const response = await batchModel.find(filter).limit(items).skip(skip);
+		const response = await previewModel.find(filter).limit(items).skip(skip);
 		if (response) {
 			return {
 				batches: response,
@@ -45,8 +42,3 @@ export const readByFilter = async (options: options) => {
 		}
 	}
 };
-
-/* 
-
-1 page => 15*page 15,15=>,30
-*/

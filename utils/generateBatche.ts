@@ -11,7 +11,6 @@ export default function generateBatches(options: {
 }): Batch {
 	const {h, s, li} = options;
 	let l: Array<number> = randomLightness(li);
-	console.log(...l, li);
 
 	// shade for nutral color b/w 0-5
 	let random_s = Math.floor(Math.random() * 5);
@@ -29,13 +28,18 @@ export default function generateBatches(options: {
 	let red_hsl: Array<string> = [],
 		green_hsl: Array<string> = [],
 		yellow_hsl: Array<string> = [];
-	if (h) {
+
+	if (!(h >= 0 && h < 25 && h >= 348 && h <= 360)) {
+		// 0 -20
+
 		red_hsl = generateShades(360, s, l);
 	}
-	if (h) {
+	if (!(h > 61 && h < 148)) {
+		// 52 - 62
 		green_hsl = generateShades(140, s, l);
 	}
-	if (h) {
+	if (!(h >= 45 && h <= 60)) {
+		// 105 - `142
 		yellow_hsl = generateShades(55, s, l);
 	}
 	// hex arrays
@@ -57,17 +61,17 @@ export default function generateBatches(options: {
 	for (let i in primary_hsl) {
 		primary_hex.push(hslToHex(primary_hsl[i]));
 		neutral_hex.push(hslToHex(neutral_hsl[i]));
-		// if (accent_hsl) accent_hex.push(hslToHex(accent_hsl[i]));
-		if (red_hsl) red_hex.push(hslToHex(red_hsl[i]));
-		if (green_hsl) green_hex.push(hslToHex(green_hsl[i]));
-		if (yellow_hsl) yellow_hex.push(hslToHex(yellow_hsl[i]));
+		if (accent_hsl.length) accent_hex.push(hslToHex(accent_hsl[i]));
+		if (red_hsl.length) red_hex.push(hslToHex(red_hsl[i]));
+		if (green_hsl.length) green_hex.push(hslToHex(green_hsl[i]));
+		if (yellow_hsl.length) yellow_hex.push(hslToHex(yellow_hsl[i]));
 
 		primary_rgb.push(hslToRgb(primary_hsl[i]));
 		neutral_rgb.push(hslToRgb(neutral_hsl[i]));
-		// if (accent_hsl) accent_rgb.push(hslToRgb(accent_hsl[i]));
-		if (red_hsl) red_rgb.push(hslToRgb(red_hsl[i]));
-		if (green_hsl) green_rgb.push(hslToRgb(green_hsl[i]));
-		if (yellow_hsl) yellow_rgb.push(hslToRgb(yellow_hsl[i]));
+		if (accent_hsl.length) accent_rgb.push(hslToRgb(accent_hsl[i]));
+		if (red_hsl.length) red_rgb.push(hslToRgb(red_hsl[i]));
+		if (green_hsl.length) green_rgb.push(hslToRgb(green_hsl[i]));
+		if (yellow_hsl.length) yellow_rgb.push(hslToRgb(yellow_hsl[i]));
 	}
 
 	const batch: Batch = {
@@ -105,23 +109,3 @@ export default function generateBatches(options: {
 	};
 	return batch;
 }
-
-/*
-	let l: Array<number> = [];
-	for (let i in lightness) {
-		// putting the lightness given in base color to shades
-		if (lightness[i][0] >= li && Math.abs(lightness[i][0] - li) <= 9) {
-			l.push(li);
-			continue;
-		}
-		let index = randomNumber(lightness[i].length);
-		l.push(lightness[i][index]);
-		// console.log(lightness[i][index]);
-	}
-	// handling edge conditions of lightness
-	if (li == 100) {
-		l[l.length - 1] = 100;
-	} else if (li == 0) {
-		l[0] = 0;
-	}
-	*/

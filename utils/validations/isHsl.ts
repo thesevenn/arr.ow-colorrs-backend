@@ -4,6 +4,8 @@ export default function isHsl(
 	hsl: string,
 	return_color: boolean = false
 ): boolean | Array<string> {
+	console.log(hsl, "aat hsl");
+
 	const hsl_present: boolean = hsl.substring(0, 3).toLowerCase() === "hsl";
 	let seperator: string = hsl.charAt(hsl.indexOf(",") || hsl.indexOf(" "));
 	const hsl_array: Array<string> = hsl

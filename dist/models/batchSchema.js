@@ -30,6 +30,10 @@ const batchSchema = new mongoose_1.Schema({
         unique: true,
         required: true,
     },
+    createdAt: {
+        type: Number,
+        default: Date.now(),
+    },
     hue: {
         type: Number,
         required: true,
