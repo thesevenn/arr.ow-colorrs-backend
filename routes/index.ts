@@ -6,7 +6,7 @@ import {listBatches} from "../controllers/listBatches";
 const router = express.Router();
 
 router.post("/generate", generator);
-router.get("/list_batch", listBatches);
+router.get("/list-batch", listBatches);
 router.get("/*", (req, res) => {
 	console.log("cannot find");
 	res.send(
