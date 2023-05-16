@@ -17,14 +17,16 @@ export const readByFilter = async (options: options) => {
 	const filter: Object = options.hue ? {hue: options.hue} : {};
 	const left: number =
 		(await previewModel.countDocuments()) - options.page * items;
-	if (left <= 0 && options.page > 1) {
-		return {
-			batches: [],
-			batches_left: 0,
-		};
-	}
+
 	try {
 		const response = await previewModel.find(filter).limit(items).skip(skip);
+		if (left <= 0 && options.page > 1 && !response) {
+			return {
+				batches: [],
+				batches_left: 0,
+			};
+		}
+
 		if (response) {
 			return {
 				batches: response,

@@ -7,7 +7,7 @@ const previewSchema = new Schema({
 		required: true,
 	},
 	createdAt: {
-		type: Number,
+		type: Date,
 		default: Date.now(),
 	},
 	hue: {

@@ -2,17 +2,13 @@ import dotenv from "dotenv";
 // making env vars loadable
 dotenv.config();
 
-import express from "express";
+import express, {Request, Response} from "express";
 import cors from "cors";
 
 import {PORT, MONGO_URI} from "./constants";
 import MainRoutes from "./routes";
 import connectToDb from "./database";
 import {logger} from "./utils/logger";
-
-import accessModel from "./models/accessSchema";
-import {readByFilter} from "./database/read";
-import {createBatch} from "./database/create";
 
 const app: express.Application = express();
 
@@ -22,11 +18,19 @@ app.use(express.urlencoded({extended: true}));
 
 if (MONGO_URI) connectToDb(MONGO_URI);
 
-// readByFilter();
-
 app.use(logger);
 app.use("/v1", MainRoutes);
+app.get("/", (req: Request, res: Response) => {
+	res.send(
+		`
+	<div>
+	<h1>Cannot find what you are looking for...</h1>
+	<a href="/">Go Back</a>
+	</div>
+	`
+	);
+});
 
 app.listen(PORT, () => {
-	console.log("running at port:", PORT);
+	console.log("Server listening requests at => http://localhost:" + PORT);
 });

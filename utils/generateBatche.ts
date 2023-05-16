@@ -29,7 +29,7 @@ export default function generateBatches(options: {
 		green_hsl: Array<string> = [],
 		yellow_hsl: Array<string> = [];
 
-	if (!(h >= 0 && h < 25 && h >= 348 && h <= 360)) {
+	if (!((h >= 0 && h < 25) || (h >= 348 && h <= 360))) {
 		// 0 -20
 
 		red_hsl = generateShades(360, s, l);

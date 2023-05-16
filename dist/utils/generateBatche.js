@@ -21,7 +21,7 @@ function generateBatches(options) {
     accent_hsl = (0, generateShades_1.default)(h - 180, s, l);
     // secondary accenet colors generation =>
     let red_hsl = [], green_hsl = [], yellow_hsl = [];
-    if (!(h >= 0 && h < 25 && h >= 348 && h <= 360)) {
+    if (!((h >= 0 && h < 25) || (h >= 348 && h <= 360))) {
         // 0 -20
         red_hsl = (0, generateShades_1.default)(360, s, l);
     }

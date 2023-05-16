@@ -8,7 +8,7 @@ const batchSchema: Schema = new Schema(
 			required: true,
 		},
 		createdAt: {
-			type: Number,
+			type: Date,
 			default: Date.now(),
 		},
 		hue: {
