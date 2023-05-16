@@ -20,16 +20,6 @@ if (MONGO_URI) connectToDb(MONGO_URI);
 
 app.use(logger);
 app.use("/v1", MainRoutes);
-app.get("/", (req: Request, res: Response) => {
-	res.send(
-		`
-	<div>
-	<h1>Cannot find what you are looking for...</h1>
-	<a href="/">Go Back</a>
-	</div>
-	`
-	);
-});
 
 app.listen(PORT, () => {
 	console.log("Server listening requests at => http://localhost:" + PORT);
