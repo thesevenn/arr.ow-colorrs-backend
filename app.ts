@@ -15,7 +15,7 @@ console.log(CLIENT_ORIGIN);
 
 app.use(
 	cors({
-		origin: "https://aesthetic-gaufre-8387d3.netlify.app/",
+		origin: "https://aesthetic-gaufre-8387d3.netlify.app",
 		methods: "POST ,GET",
 	})
 );

@@ -23,10 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.lightness = exports.MONGO_URI = exports.PORT = void 0;
+exports.lightness = exports.CLIENT_ORIGIN = exports.MONGO_URI = exports.PORT = void 0;
 const l = __importStar(require("./lightness"));
 exports.PORT = process.env.PORT;
 exports.MONGO_URI = process.env.MONGO_URI;
+exports.CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 // lightness from ./lightness
 exports.lightness = [
     l.l_100,

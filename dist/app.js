@@ -13,7 +13,11 @@ const routes_1 = __importDefault(require("./routes"));
 const database_1 = __importDefault(require("./database"));
 const logger_1 = require("./utils/logger");
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)({ origin: "http://localhost:3000", methods: "POST ,GET" }));
+console.log(constants_1.CLIENT_ORIGIN);
+app.use((0, cors_1.default)({
+    origin: "https://aesthetic-gaufre-8387d3.netlify.app",
+    methods: "POST ,GET",
+}));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 if (constants_1.MONGO_URI)
