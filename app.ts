@@ -5,14 +5,14 @@ dotenv.config();
 import express, {Request, Response} from "express";
 import cors from "cors";
 
-import {PORT, MONGO_URI} from "./constants";
+import {PORT, MONGO_URI, CLIENT_ORIGIN} from "./constants";
 import MainRoutes from "./routes";
 import connectToDb from "./database";
 import {logger} from "./utils/logger";
 
 const app: express.Application = express();
 
-app.use(cors({origin: "http://localhost:3000", methods: "POST ,GET"}));
+app.use(cors({origin: CLIENT_ORIGIN, methods: "POST ,GET"}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 

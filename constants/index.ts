@@ -2,6 +2,7 @@ import * as l from "./lightness";
 
 export const PORT: string | undefined = process.env.PORT;
 export const MONGO_URI: string | undefined = process.env.MONGO_URI;
+export const CLIENT_ORIGIN: string | undefined = process.env.CLIENT_ORIGIN;
 
 // lightness from ./lightness
 export const lightness: Array<number>[] = [
