@@ -24,14 +24,14 @@ const readByFilter = (options) => __awaiter(void 0, void 0, void 0, function* ()
     const skip = (options.page - 1) * items;
     const filter = options.hue ? { hue: options.hue } : {};
     const left = (yield previewSchema_1.default.countDocuments()) - options.page * items;
-    if (left <= 0 && options.page > 1) {
-        return {
-            batches: [],
-            batches_left: 0,
-        };
-    }
     try {
         const response = yield previewSchema_1.default.find(filter).limit(items).skip(skip);
+        if (left <= 0 && options.page > 1 && !response) {
+            return {
+                batches: [],
+                batches_left: 0,
+            };
+        }
         if (response) {
             return {
                 batches: response,

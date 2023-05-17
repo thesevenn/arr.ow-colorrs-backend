@@ -13,7 +13,6 @@ exports.listBatches = void 0;
 const read_1 = require("../database/read");
 const listBatches = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { hue, batches, page } = req.query;
-    console.log(hue, batches, page);
     const result = yield (0, read_1.readByFilter)({ hue, batches, page: page || 1 });
     if (result) {
         res.status(200).json({

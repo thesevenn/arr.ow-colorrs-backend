@@ -31,7 +31,7 @@ const batchSchema = new mongoose_1.Schema({
         required: true,
     },
     createdAt: {
-        type: Number,
+        type: Date,
         default: Date.now(),
     },
     hue: {
