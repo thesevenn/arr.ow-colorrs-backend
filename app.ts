@@ -11,8 +11,14 @@ import connectToDb from "./database";
 import {logger} from "./utils/logger";
 
 const app: express.Application = express();
+console.log(CLIENT_ORIGIN);
 
-app.use(cors({origin: CLIENT_ORIGIN, methods: "POST ,GET"}));
+app.use(
+	cors({
+		origin: "https://aesthetic-gaufre-8387d3.netlify.app",
+		methods: "POST ,GET",
+	})
+);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
